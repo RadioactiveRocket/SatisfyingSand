@@ -63,7 +63,7 @@ canvas.addEventListener("touchstart", mouseputdown, false)
 
 let mousereleased = () => {mousedown = false}
 window.addEventListener("mouseup", mousereleased, false)
-window.addEventListener("touchlistener", mousereleased, false)
+window.addEventListener("touchend", mousereleased, false)
 
 document.addEventListener("keypress", function(event) {
     if (!(["TEXTAREA", "SELECT", "OPTION"].includes(event.target.tagName) || event.target.type == "text")) { // If not typing in a textbox.
