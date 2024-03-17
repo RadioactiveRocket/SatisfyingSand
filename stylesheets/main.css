@@ -9,8 +9,8 @@
     width: 100vw;
     
     /* Modern Browsers */
-    height: 100lvh;
-    width: 100lvw;
+    height: 100dvh;
+    width: 100dvw;
     
     background-color: black;
     image-rendering: pixelated;
