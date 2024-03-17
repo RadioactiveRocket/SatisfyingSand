@@ -25,7 +25,20 @@
 
 <kbd>Left Click</kbd> or <kbd>Touch</kbd> - Place sand.
 
-<kbd>Right Click</kbd> - Remove sand (eraser, can also be used by pressing `0`).
+<kbd>Right Click</kbd> - Remove sand (eraser, can also be used by pressing <kbd>0</kbd>).
+
+### Special
+
+<kbd>Space</kbd> - Pause/play.
+
+<kbd>Shift</kbd> - Turn pattern on or off. - 🔵
+${\textsf{\color{blue}Note: I think this looks cool.}}$
+
+<kbd>⯅</kbd> or <kbd>⯈</kbd> - Increase brush size.
+
+<kbd>⯆</kbd> or <kbd>⯇</kbd> - Decrease brush size.
+
+<kbd>C</kbd> - Reload the page and clear the screen.
 
 ### Change Sand Colour Scheme
 <kbd>1</kbd> - Rainbow.
@@ -61,17 +74,6 @@
 <kbd>n</kbd> - Neon.
 
 <kbd>0</kbd> - Eraser.
-
-### Special
-
-<kbd>C</kbd> - Reload the page and clear the screen.
-
-<kbd>Shift</kbd> - Turn pattern on or off. - 🔵
-${\textsf{\color{blue}Note: I think this looks cool.}}$
-
-<kbd>⯅</kbd> or <kbd>⯈</kbd> - Increase brush size.
-
-<kbd>⯆</kbd> or <kbd>⯇</kbd> - Decrease brush size.
 
  ## Custom Sizes
  To change the size of the sandbox, edit the url like so:
