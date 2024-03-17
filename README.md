@@ -91,3 +91,5 @@ ${\textsf{\color{blue}Note: I think this looks cool.}}$
 > https://radioactiverocket.github.io/Sand-Test?alpha
 > The tab you changed to should show up as the sandbox background, and so should stuff like the search suggestions and the inspect element window.
 > Weird, right?
+>
+> Only works in some browsers.
