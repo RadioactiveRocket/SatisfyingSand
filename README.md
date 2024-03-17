@@ -1,7 +1,7 @@
-# Sand Test
-A simple falling-sand simulation test.
+# $${\textsf{\color{goldenrod}SAND } \textsf{\color{Bittersweet}TEST}}$$
+<p align="center">A simple falling-sand simulation test.</p>
 
-## Play
+## Play - ${\textsf{\color{red}See controls first.}}$
 [Very Big](https://radioactiverocket.github.io/Sand-Test/?size=0.3&brush=50) // 0.3
 
 [Quite Big](https://radioactiverocket.github.io/Sand-Test/?size=0.4&brush=40) // 0.4
@@ -89,4 +89,5 @@ ${\textsf{\color{blue}Note: I think this looks cool.}}$
 > [!NOTE]
 > If you want to see something weird, open the link below, change to another tab, then change back.
 > https://radioactiverocket.github.io/Sand-Test?alpha
- 
+> The tab you changed to should show up as the sandbox background, and so should stuff like the search suggestions and the inspect element window.
+> Weird, right?
