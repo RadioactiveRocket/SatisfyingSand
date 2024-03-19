@@ -1,15 +1,28 @@
-let mousex
-let mousey
 let lastevent
 let frame = 0
 let mousedown = false
 let mousebutton = 0
-let pattern = false
-let paused = false
 let ltr = true
+let searchparams = new URLSearchParams(window.location.search)
 
-let brushsize = (new URLSearchParams(window.location.search)).get("brush") ?? 20
-let size = (new URLSearchParams(window.location.search)).get("size") ?? 1
+let pattern = searchparams.get("pattern") ?? false
+let paused = searchparams.get("paused") ?? false
+let brushsize = searchparams.get("brush") ?? 20
+let size = searchparams.get("size") ?? 1
+
+let textstyle = {
+    "font": "FontAwesome,'Helvetica Neue', Helvetica, Arial, sans-serif",
+    "align": "left",
+    "color": "rgba(255, 255, 255, 1)",
+    "size": 10,
+    "background": "rgba(0, 0, 0, 0)",
+    "stroke": 0,
+    "strokeColor": "rgba(255, 255, 255, 1)",
+    "lineHeight": "1.2em",
+    "bold": false,
+    "italic": false
+};
+let textimage = TextImage(textstyle)
 
 // Colours
 
@@ -36,17 +49,96 @@ let colours = rainbow
 // Canvas
 
 let canvas = document.createElement("canvas")
-let ctx = canvas.getContext("2d", {alpha: ((new URLSearchParams(window.location.search)).get("alpha") ?? true)})
+let ctx = canvas.getContext("2d", {alpha: (searchparams.get("alpha") ?? true)})
 canvas.id = "render"
+canvas.style.backgroundColor = searchparams.get("bg") ?? "black"
 
-let gridx = (new URLSearchParams(window.location.search)).get("x") ?? Math.round(window.innerWidth / size)
-let gridy = (new URLSearchParams(window.location.search)).get("y") ?? Math.round(window.innerHeight / size)
+let gridx = searchparams.get("x") ?? Math.round(window.innerWidth / size)
+let gridy = searchparams.get("y") ?? Math.round(window.innerHeight / size)
 
 canvas.width = gridx
 canvas.height = gridy
 
 let image = ctx.createImageData(canvas.width, canvas.height)
 let data = image.data
+
+document.ondrop = (event) => {
+    event.preventDefault()
+
+    ;[...event.dataTransfer.files].forEach((file, index) => {
+        let reader = new FileReader()
+        let m = getmousepos(canvas, event)
+
+        if (file.type.includes("image")) {
+            reader.onload = function (e) {
+                loadimage(e.target.result, m.x, m.y)
+            }
+
+            reader.readAsDataURL(file)
+        } else {
+            let colour
+
+            if (mousebutton != 2) {
+                colour = colours[wrapindex(colours.length, frame)]
+            } else {
+                colour = [0,0,0,0]
+            }
+
+            reader.onload = function (e) {
+                textimage.style.color = `rgba(${colour[0]},  ${colour[1]}, ${colour[2]}, ${(colour[3] ?? 255) / 255})`
+                loadimage(textimage.toDataURL(e.target.result), m.x, m.y)
+            }
+            
+            reader.readAsText(file)
+        }
+    })   
+}
+
+document.onpaste = (event) => {
+    event.preventDefault();
+
+    let colour
+
+    ;[...event.clipboardData.files].forEach((file, index) => {
+        let reader = new FileReader()
+
+        if (file.type.includes("image")) {
+            reader.onload = function (e) {
+                loadimage(e.target.result)
+            }
+
+            reader.readAsDataURL(file)
+        } else {
+            if (mousebutton != 2) {
+                colour = colours[wrapindex(colours.length, frame)]
+            } else {
+                colour = [0,0,0,0]
+            }
+
+            reader.onload = function (e) {
+                textimage.style.color = `rgba(${colour[0]},  ${colour[1]}, ${colour[2]}, ${(colour[3] ?? 255) / 255})`
+                loadimage(textimage.toDataURL(e.target.result))
+            }
+            
+            reader.readAsText(file)
+        }
+    })
+
+    if (event.clipboardData.getData('Text')) {
+        if (mousebutton != 2) {
+            colour = colours[wrapindex(colours.length, frame)]
+        } else {
+            colour = [0,0,0,0]
+        }
+
+        textimage.style.color = `rgba(${colour[0]},  ${colour[1]}, ${colour[2]}, ${(colour[3] ?? 255) / 255})`
+        loadimage(textimage.toDataURL(event.clipboardData.getData('Text')))
+    }
+}
+
+document.ondragover = (event) => {
+    event.preventDefault();
+}
 
 document.body.prepend(canvas)
 
@@ -102,9 +194,11 @@ document.addEventListener("keypress", function(event) {
         } else if (event.key == "0") {
             colours = erase
         } else if (event.key == " ") {
-            paused = !paused
+            document.getElementById("pausebutton").click()
         } else if (event.key == "c") {
-            location.reload()
+            document.getElementById("clearbutton").click()
+        } else if (event.key == "t") {
+            document.getElementById("drawtextbutton").click()
         }
     }
 })
@@ -114,7 +208,9 @@ document.addEventListener("keydown", function(event) {
         if (event.key == "ArrowRight" || event.key == "ArrowUp") {
             brushsize += 1
         } else if (event.key == "ArrowLeft" || event.key == "ArrowDown") {
-            brushsize -= 1
+            if (brushsize > 0) {
+                brushsize -= 1
+            }
         } else if (event.key == "Shift") {
             pattern = !pattern
         }
@@ -122,6 +218,22 @@ document.addEventListener("keydown", function(event) {
 })
 
 // Functions
+
+function loadimage(url, x, y) {
+    let img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = url;
+    img.addEventListener("load", () => {
+        let imagewidth = img.width / (searchparams.get("imagesize") ?? 1)
+        let imageheight = img.height / (searchparams.get("imagesize") ?? 1)
+        let left = Math.round((x ?? canvas.width / 2) - imagewidth / 2)
+        let top = Math.round((y ?? canvas.height / 2) - imageheight / 2) 
+        ctx.drawImage(img, left, top, imagewidth, imageheight);
+
+        image = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        data = image.data
+    });
+}
 
 function wrapindex(wrap, index) {
     return (index % wrap + wrap) % wrap
@@ -164,12 +276,25 @@ function draw(event) {
     }
 }
 
-function getmousepos(canvas, evt) {
+function drawtext(text) {
+    let colour
+            
+    if (mousebutton != 2) {
+        colour = colours[wrapindex(colours.length, frame)]
+    } else {
+        colour = [0,0,0,0]
+    }
+
+    textimage.style.color = `rgba(${colour[0]},  ${colour[1]}, ${colour[2]}, ${(colour[3] ?? 255) / 255})`
+    loadimage(textimage.toDataURL(text))
+}
+
+function getmousepos(canvas, event) {
     var rect = canvas.getBoundingClientRect()
-    lastevent = evt
+    lastevent = event
     return {
-        x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-        y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+        x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+        y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
     }
 }
 
@@ -252,4 +377,5 @@ function update() {
     requestAnimationFrame(update)
 }
 
-update() // Start.
+loadimage(searchparams.get("image"))
+update()
