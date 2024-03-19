@@ -1,5 +1,5 @@
-# $${\textsf{\color{goldenrod}SAND } \textsf{\color{Bittersweet}TEST}}$$
-<p align="center">A simple falling-sand simulation test.</p>
+# $${\textsf{\color{goldenrod}Satisfying } \textsf{\color{Bittersweet}Sand}}$$
+<p align="center">A satisfying falling-sand simulation with the ability to load images and text.</p>
 
 ## Play - ${\textsf{\color{red}See controls first.}}$
 [Very Big](https://radioactiverocket.github.io/Sand-Test/?size=0.3&brush=50) // 0.3
