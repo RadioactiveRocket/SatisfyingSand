@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sand Test</title>
+    <title>Satisfying Sand</title>
     
     <script src="javascript/sand.js" defer></script>
+    <script src="javascript/ui.js" defer></script>
     <link rel="stylesheet" href="stylesheets/main.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/text-image/dist/text-image.js"></script>
 </head>
     <body>
         <!-- Canvas -->
+
+        <div id="controls">
+            <div id="left">
+                <button id="playpausebutton" onclick="paused = !paused">Play/Pause</button>
+                <button id="clearbutton" onclick="image = ctx.createImageData(canvas.width, canvas.height); data = image.data">Clear</button>
+                <button id="drawtextbutton" onclick="drawtext(window.prompt('Text:', 'Hello World!'))">Text</button>
+            </div>
+
+            <div id="right">
+                <button class="colour"><div style="background-color: #d69da4" onclick="colours = [[0, 0, 0, 0]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(255, 0, 0, 1)" onclick="colours = [[255, 0, 0, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(255, 154, 0, 1)" onclick="colours = [[255, 154, 0, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(208, 222, 33, 1)" onclick="colours = [[208, 222, 33, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(79, 220, 74, 1)" onclick="colours = [[79, 220, 74, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(63, 218, 216, 1)" onclick="colours = [[63, 218, 216, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(47, 201, 226, 1)" onclick="colours = [[47, 201, 226, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(28, 127, 238, 1)" onclick="colours = [[28, 127, 238, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(95, 21, 242, 1)" onclick="colours = [[95, 21, 242, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(186, 12, 248, 1)" onclick="colours = [[186, 12, 248, 255]]"></div></button>
+                <button class="colour"><div style="background-color: rgba(251, 7, 217, 1)" onclick="colours = [[251, 7, 217, 255]]"></div></button>
+                <button class="colour"><div id="customcolour" onclick="colours = rainbow"></div></button>
+            </div>
+        </div>
     </body>
 </html>
