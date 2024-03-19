@@ -38,7 +38,7 @@ ${\textsf{\color{blue}Note: I think this looks cool.}}$
 
 <kbd>⯆</kbd> or <kbd>⯇</kbd> - Decrease brush size.
 
-<kbd>C</kbd> - Reload the page and clear the screen.
+<kbd>C</kbd> - Reset/clear the sandbox.
 
 ### Change Sand Colour Scheme
 <kbd>1</kbd> - Rainbow.
