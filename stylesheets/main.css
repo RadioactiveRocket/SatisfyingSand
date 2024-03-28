@@ -1,6 +1,19 @@
+@font-face {
+    font-family: Monocraft;
+    src: url(../resources/Monocraft.ttf)  format(truetype);
+
+    font-family: DanBall;
+    src: url(../resources/dan-ball.ttf)  format(truetype)
+}
+
 * {
     margin: 0;
     overflow: hidden;
+}
+
+*::selection {
+    /* background-color: #aa23ff; */
+    background-color: rgba(0, 0, 0, 0)
 }
 
 #render {
@@ -47,8 +60,8 @@
 }
 
 .colour {
-    width: 4em;
-    height: 4em;
+    width: 3em;
+    height: 3em;
 }
 
 .colour div {
@@ -92,4 +105,12 @@ button.active {
         rgba(251, 7, 217, 1) 90%,
         rgba(255, 0, 0, 1) 100%
     );
+}
+
+#cursor {
+    position: absolute;
+    opacity: 0.7;
+    z-index: 999;
+    pointer-events: none;
+    image-rendering: pixelated;
 }
